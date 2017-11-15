@@ -10,8 +10,7 @@ int resizeUp(ArrayList* this);
 int expand(ArrayList* this,int index);
 int contract(ArrayList* this,int index);
 
-#define AL_INCREMENT      10
-#define AL_INITIAL_VALUE  10
+
 //___________________
 
 /** \brief Allocate a new arrayList with AL_INITIAL_VALUE elements.
@@ -163,6 +162,7 @@ int al_contains(ArrayList* this, void* pElement)
     int i;
     if(this!=NULL && pElement!=NULL)
     {
+        aux=0;
         for(i=0; i<this->size; i++)
         {
             if(this->pElements[i]==pElement)
@@ -170,7 +170,7 @@ int al_contains(ArrayList* this, void* pElement)
                 aux=1;
                 break;
             }
-            aux=0;
+
         }
 
     }
@@ -266,23 +266,24 @@ int al_clear(ArrayList* this)
 ArrayList* al_clone(ArrayList* this)
 {
     ArrayList* clone=al_newArrayList();
-    void** aux;
+    // void** aux;
     int i;
 
     if(this!=NULL && clone!=NULL)
     {
-        aux=(void**)realloc(clone->pElements,sizeof(void*)*this->reservedSize);
-        if(aux!=NULL)
+        /* aux=(void**)realloc(clone->pElements,sizeof(void*)*this->reservedSize);
+         if(aux!=NULL)
+         {
+             clone->pElements=aux;
+             free(aux);
+          */
+        for(i=0; i<this->size; i++)
         {
-            clone->pElements=aux;
-            free(aux);
-            for(i=0; i<this->size; i++)
-            {
-                this->add(clone,this->get(this,i));
+            this->add(clone,this->get(this,i));
 
-            }
         }
     }
+
     else
     {
         clone = NULL;
@@ -403,16 +404,28 @@ void* al_pop(ArrayList* this,int index)
  */
 ArrayList* al_subList(ArrayList* this,int from,int to)
 {
+
     ArrayList* aux=NULL;
-    if(this!=NULL && from>=0 && to<this->size)
+    void* auxPelement;
+    int i;
+    if(this!=NULL && from>=0 && from<this->size && to<=this->size && to>from )
     {
         aux=al_newArrayList();
         if(aux!=NULL)
         {
+            for(i=from; i<to; i++)
+            {
+                auxPelement= this->get(this,i);
+                if(auxPelement!=NULL)
+                {
+                    //    aux->add(aux,*(this->pElements+i));
+                    aux->add(aux,this->get(this,i));
 
+                }
+
+            }
 
         }
-
 
 
     }
@@ -432,7 +445,23 @@ ArrayList* al_subList(ArrayList* this,int from,int to)
  */
 int al_containsAll(ArrayList* this,ArrayList* this2)
 {
-    int returnAux = -1;
+    int returnAux=-1;
+    int i;
+    int aux;
+    if(this!=NULL && this2!=NULL)
+    {
+        returnAux=1;
+        for(i=0; i<this2->size; i++)
+        {
+            aux = this->contains(this,this2->get(this2,i));
+            if(!aux)
+            {
+                returnAux=0;
+                break;
+            }
+        }
+
+    }
 
     return returnAux;
 }

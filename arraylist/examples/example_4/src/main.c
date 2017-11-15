@@ -42,10 +42,10 @@ int main(void)
         startTesting(12);//indexof
         startTesting(13);//isEmply
         startTesting(14);//pop
-  /*    startTesting(15);//sublist
+        startTesting(15);//sublist
         startTesting(16);//containsALL
-        startTesting(17);//sort
-*/
+    //    startTesting(17);//sort
+
     return 0;
 }
 

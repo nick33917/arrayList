@@ -87,8 +87,6 @@ void fifthTestCase02(void)
         utest_assertNotNullMsg(pAuxGet[i],"Error in return value <get> if ok the correct value to return is not NULL");
     }
 
-
-
     for (i=0;i < LENGTH;i++)
     {
         utest_assertEqualsIntMsg(((Employee*)pAuxGet[i])->id,id[i],"Error value in <.id>");
