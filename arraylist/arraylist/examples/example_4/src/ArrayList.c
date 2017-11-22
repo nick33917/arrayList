@@ -448,30 +448,26 @@ int al_containsAll(ArrayList* this,ArrayList* this2)
 {
     int returnAux=-1;
     int i;
-    if(this!=NULL && this2!=NULL)
-    {
-        if(this->size==this2->size)
-        {
-            for(i=0;i<this->size;i++)
-            {
-                if((al_contains(this,al_get(this2,i)))==1)
-                {
-                    returnAux=1;
+    int aux;
 
-                }
-                else
-                {
-                    returnAux=0;
-                    break;
-                }
+    if(this != NULL && this2 != NULL )
+    {
+        returnAux = 1;
+        if(this->len(this) != this2->len(this2))
+        {
+           returnAux = 0;
+        }
+
+        for(i = 0; i < this2->len(this2); i++)
+        {
+            aux = this->contains(this, *(this2->pElements + i));
+            if(aux!= 1)
+            {
+                returnAux = 0;
+                break;
             }
         }
-        else
-        {
-            returnAux=0;
-        }
     }
-
     return returnAux;
 
 }
